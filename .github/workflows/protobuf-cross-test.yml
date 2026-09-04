@@ -76,9 +76,9 @@ jobs:
       - uses: ./.github/actions/pipdeptree
       - name: Run tests
         run: |
-          # NB: test_mlflow_artifacts.py is excluded because it runs docker-compose with fresh
-          # container builds. The protobuf version in the test environment has no effect on the
-          # containers, making cross-version testing unnecessary and wasteful of disk space.
+          # NB: Docker-based tests are excluded because they run docker-compose with fresh container
+          # builds. The protobuf version in the test environment has no effect on the containers,
+          # making cross-version testing unnecessary and wasteful of disk space.
           uv run --no-sync pytest --splits=${{ matrix.splits }} --group=${{ matrix.group }} \
             --ignore-flavors \
             --ignore=tests/projects \
@@ -89,5 +89,6 @@ jobs:
             --ignore=tests/genai \
             --ignore=tests/telemetry \
             --ignore=tests/gateway \
+            --ignore=tests/docker \
             --ignore=tests/tracking/test_mlflow_artifacts.py \
             tests
